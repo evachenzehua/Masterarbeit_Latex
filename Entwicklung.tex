@@ -1,0 +1,476 @@
+\chapter{Entwicklung des automatisierten Montageprozesses}
+%-------------------------------------------------
+%-------------------------------------------------
+In diesem Kapitel werden der Montageprozess detailliert beschrieben. Um einen automatisierten Montageprozess zu entwickeln, muss man vor allem auf den Anforderungen und Randbedingungen an dem einzelnen Teilprozess berücksichtigen. Anschließend werden die einzelne Prozessmodule entwickelt. Zum Schluss werden die Lagebeziehung sowie die nötigen Koordinatentransformationen zwischen den Prozessmodulen ermittelt.
+%-------------------------------------------------
+%-------------------------------------------------
+\section{Anforderungen und Randbedingungen}
+\label{sec:Anforderungen}
+Das Ziel der automatisierten Montage von ITO-Glas auf Platinen besteht darin, fehlerfreie und funktionsfähige Schaltungen reproduzierbar, in hoher Qualität sowie in möglichst kurzer Prozesszeit herstellen zu können. Daraus lassen sich die Anforderungen an den Montageprozess und sich ergebende Randbedingungen ableiten:
+
+{\bf Anforderungen:}
+\begin{itemize}
+    \item Berührungs- und Temperaturempfindlichkeit der gedruckten ITO-Transistoren
+    \item Schwierigkeit beim Befüllen von geringen Klebstoffmengen
+    \item Topfzeit 
+    \item Reproduzierbares Dosieren des elektrischen leitenden Klebstoffs
+    \item Gute Haftung der Bauteile auf den Kontaktpads 
+    \item Präzise Positionierung der Platine
+    \item Präzises Transportieren des ITO-Glas
+\end{itemize}
+{\bf Randbedingungen:}
+\begin{itemize}
+    \item Aushärtungstemperatur (Max. 50°C)
+    \item Dosierpunktgröße (\textless 1mm x 1mm)
+    \item Steuerung mittels C++ Script
+\end{itemize}
+Die gedruckten Transistoren sind berührungs- und temperaturempfindlich, daher wird ein spezieller Werkstückträger für ITO-Glas entworfen und die Aushärtungstemperatur des Klebstoffs berücksichtigt. Nach den Datenblättern sind die Topfzeit der beiden Klebstoffe 2 Stunden. Darüber hinaus liegt die Schwierigkeit auch beim Befüllen von geringen Klebstoffmengen, Dies spielt später eine wichtige Rolle für die Reproduzierbarkeit des Dosierprozesses. Wegen der geringen Dosiermenge ist die Topfzeit des Klebstoffs wahrscheinlich noch kurzer. Einmal gemischt fordert der Klebstoff eine schnelle Verarbeitung, da dieser sofort auszuhärten beginnt, bleibt oft nur eine Verarbeitungszeit innerhalb Topfzeit. Vor Klebebeginn ist sicherzustellen, dass alle zu verklebenden Teile für die Verklebung vorbereitet sind. Alle Kontaktpads auf der Platine sind 1mm x 1mm groß, um die Kurzschlüsse zu vermeiden muss die Dosierpunktgröße innerhalb von 1mm x 1mm. Außer der elektrischen Haftung bedient der zu verwendende Klebstoff der mechanischen Haftung zwischen den ITO-Glas und Platine. 
+
+Das Programm zur Steuerung des Montageprozesses wird mit Hilfe vom Visual Control-API (Applikation Programm Interface) in C++ geschrieben, damit der Montageprozess beschleunigt werden kann. Kommunikation zwischen Computer und Steuerung können durch das API realisiert werden. 
+
+Die zurzeit auf dem Markt verfügbaren Auftragsverfahren sind in ihrer Reproduzierbarkeit und Genauigkeit beschränkt. Der Abstand zwischen Dosiernadel und Substrat, Druckluft und Dosierzeitintervall schränken erheblich die Effizienz eines Dosierverfahrens ein. Die Ermittlung der Parameter, wie der Druckluft und dementsprechender optimaler Dosierabstand, ist für die Reproduzierbarkeit des automatisierten Montageprozesses von großer Bedeutung. Daraus lassen sich die Erfordernisse zur Entwicklung eines Verfahrens zum Punktauftrag vom hochviskosen elektrisch leitenden Klebstoff ableiten. Das zu erarbeitende Auftragsverfahren muss:
+\begin{itemize}
+    \item präzise dosieren
+    \item hochviskose elektrisch leitende Klebstoffe dosieren
+    \item die optimale Druckluft ableiten
+    \item den optimalen Dosierabstand ermitteln
+    \item den optimalen Dosierzeitintervall ermitteln
+\end{itemize}
+
+Eine Übersicht der Anforderungen und Randbedingungen des zu entwickelten automatisierten Montageprozesses und dessen Maßnahmen sind in Tabelle~\ref{tab:anforderungmassnahme} dargestellt. 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{p{20mm}|p{62mm}|p{62mm}l|l|l}
+    \hline
+        Teilprozess & Anforderung   & Maßnahme\\ 
+    \hline
+        \multicolumn{1}{l|}{\multirow {3}{*}{Initialisieren}} & Berührungs- und Temperaturempfindlichkeit der gedruckten ITO-Transistoren & Werkstückträger \\
+        \cline{2-3}
+          & Beim Befüllen des Klebstoffs keine Lufteinschlüsse & Vibration; Ultra-Schall\\
+          \cline{2-3}
+          & Schwierigkeit beim Befüllen von geringen Klebstoffs & Auswahl bzw. Entwurf einer geeigneten Kartusche \\
+         \cline{2-3}
+          & Aushärtungsverfahren & Auswahl eines geeigneten Klebstoffs\\
+         \hline
+         \multicolumn{1}{l|}{\multirow {3}{*}{Dosieren}}& Beim Dosieren keine Lufteinschlüsse & Vordosieren\\
+         \cline{2-3}
+         ~ & Kein Nachtropfen & Geeignete Zeit für Druckaufbau und Druckabbau  \\
+         \cline{2-3}
+         ~ & Möglichkeit der Punktdosierung & Diskontinuierlicher Auftrag\\
+         \cline{2-3}
+         ~ & Präzise dosieren & Nadelkalibrieren \\
+         \cline{2-3}
+         ~ & Reproduzierbarer Dosierprozess & Durchführung von Experimenten zur Auswahl der geeigneten Dosiernadel sowie der optimalen Dosierparametern \\
+         \hline
+         Bestücken & Präzises transportieren & Bildverarbeitung\\
+    \hline
+    \end{tabular}
+    \caption{Anforderung und Maßnahme}
+    \label{tab:anforderungmassnahme}
+\end{table}
+
+Die hier abgeleiteten Anforderungen und Randbedingungen werden bei der Entwicklung der Prozesskomponenten in den folgenden Abschnitten berücksichtigt und näher ausgeführt.
+%-------------------------------------------------
+%-------------------------------------------------
+\section{Konzeption des Montageprozesses}
+
+Der Montageprozess muss die im Abschnitt~\ref{sec:Anforderungen} erläuterten Anforderungen erfüllen. Darüber hinaus muss der Gesamtprozess zuverlässig gesteuert werden. Der grobe Ablaufplan des Montageprozesses ist in Abbildung~\ref{fig:Prozessablauf} dargestellt.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 120mm]{bilder/Prozessablauf.png}
+    \caption{grober Ablaufplan des Montageprozesses}
+    \label{fig:Prozessablauf}
+\end{figure}
+
+Im Nachfolgenden sind die detaillierten Aufgaben des Teilprozesses: 
+
+{\bf Initialisieren:}
+\begin{itemize}
+    \item Manuelles Einbringen der zu klebenden Bauteile
+    \item Befüllen der Dosiernadel
+    \item Referenzieren
+\end{itemize}
+{\bf Dosieren:}
+\begin{itemize}
+    \item Vordosieren des Klebstoffs
+    \item Dosieren an den Kontaktpads (Platine)
+\end{itemize}
+{\bf Bestücken:}
+\begin{itemize}
+    \item Ansaugen bzw. Transportieren des ITO-Glases
+    \item Bildaufnehmen
+    \item Ausrichten des ITO-Glases
+    \item Absetzen des ITO-Glases auf die definierte Position
+\end{itemize}
+
+
+
+%-------------------------------------------------
+\subsection{Glasträger}
+Die ITO-Gläser und Platine werden manuell in das Montagesystem eingebracht. Wegen der Berührungs- und Temperaturempfindlichkeit der auf ITO-Glas gedruckten Transistoren wird ein spezieller Glasträger entworfen. Einmal können 8 ITO-Gläser im Glasträger geladen werden, wie in Abbildung~\ref{fig:werkstuecktraeger} dargestellt. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 90mm]{bilder/Werkstuecktraeger.png}
+    \caption{Glasträger}
+    \label{fig:werkstuecktraeger}
+\end{figure}
+Als Material für den Glasträger wird FR4, ein schwer entflammbarer Verbundwerkstoff aus Glas-fasergewebe und Epoxidharz verwendet, welcher üblicherweise als Trägermaterial bei der Fertigung von Leiterplatten eingesetzt wird. Das FR4-Material lässt sich mit einer PCB-Fräsmaschine bearbeiten. Mit Hilfe der PCB-Fräsmaschine wurden am IAI den Glasträger gefertigt. 
+
+Die X- bzw. Y-Position des Glasträgers bzw. der Platine wird mittels kegeliger Stifte und den im Vakuumchuck dafür vorgesehenen Bohrungen definiert. Die Position in Z-Richtung ist durch die Oberfläche des Vakuumchucks gegeben. Während des Montageprozesses werden Glasträger sowie der Platine durch den im Vakuumchuck anliegenden Unterdruck in ihrer Position fixiert. Die Position des Glasträgers bzw. Platine sowie ihrer jeweiligen Anschlagspunkte zeigt Abbildung ~\ref{fig:Anordnung}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 100mm]{bilder/Anordnung.jpg}
+    \caption{Anordnung des Glasträger und der Platine auf dem Vakuumchuck}
+    \label{fig:Anordnung}
+\end{figure}
+
+%-------------------------------------------------
+\subsection{Klebstoffauswahl}
+Der Klebstoff muss während der Herstellung und der gesamten Lebensdauer des Bauteils die Funktion der Verbindung gewährleisten. Die Klebstoffauswahl richtet sich zunächst nach den mechanischen, elektrischen und thermischen Anforderungen, die an den Klebstoff gestellt werden. Diese ergeben sich aus dem Einsatz der Verbindung:
+\begin{itemize}
+    \item der mechanischen Belastung
+    \item der Konstruktion der Verbindung und 
+    \item den Umgebungsbedingungen, unter denen die Verbindung eingesetzt wird.
+\end{itemize}
+Im Folgenden werden alle relevanten Anforderungen beim Klebstoffauswahl in Form von Forderungen und Wünschen dokumentiert. Die Anforderungsliste dient als Grundlage für die spätere Abnahme des Klebstoffs und soll Fehlentwicklungen vermeiden.
+
+{\bf Forderungen:}
+\begin{itemize}
+    \item elektrisch leitfähig
+    \item niedrige Aushärtungstemperatur (Max. 50°C)
+    \item hinreichend niedrige Viskosität (dosierbar mit der Nadel)
+    \item Reproduzierbarkeit (bestellbar im Markt)
+    \item gut abzuwiegendes Mischungsverhältnis (wenn es sich um 2-K Klebstoff handelt)
+    \item nicht zu kurze Topfzeit (Min. 30 Minuten)
+\end{itemize}
+{\bf Wünsche:}
+\begin{itemize}
+   \item günstig
+   \item lange Lagerzeit
+\end{itemize}
+Nach dem Recherchieren werden folgende 4 elektrisch leitende Klebstoffe als Kandidaten ausgewählt. Die Wertskala nach VDI 2225 und die genaue Nutzwertanalyse zum Auswählen des endgültigen Klebstoffs sind in den Tabellen~\ref{tab:Wertskala} und ~\ref{tab:Nutzwertanalyse} dargestellt. Nach der Nutzwertanalyse werden Panacol Elecolit 336 und Elecolit 325 zu Vorversuchen des Dosierprozesses verwendet.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm} l|l|l|l|l|l}
+    \hline
+         Punkt & 0 & 1 & 2 & 3 & 4 \\
+         \hline
+         Bedeutung & unbefrie-digend & gerade noch tragbar & ausreichend & gut & sehr gut \\
+    \hline
+    \end{tabular}
+    \caption{Wertskala nach VDI 2225}
+    \label{tab:Wertskala}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{p{4cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm} l|l|l|l|l|l|}
+    \hline
+     Kriterium  & Gewicht & Loctite 3888 & Duralco 125 & Elecolit 336 & Elecolit 325 \\
+    \hline
+	Aushärtungstemperatur & 5 & 4 & 4 & 4 & 4\\
+	Viskosität & 5 & 4 & 3 & 3 & 3\\
+	Reproduzierbarkeit & 5 & 4 & 4 & 4 & 4\\
+	Mischungsverhältnis & 4 & 2 & 3 & 3 & 3\\
+	Topfzeit & 5 & 4 & 4 & 4 & 4\\
+	Kosten & 3 & 1 & 1 & 3 & 3\\
+	Lagerzeit & 2 & 4 & 3 & 4 & 4\\
+	\hline
+	Wertung & - & 99 & 96 & 104 & 104\\
+	\hline
+	Rang & - & 3 & 4 & 1 & 1\\
+	\hline
+    \end{tabular}
+    \caption{Nutzwertanalyse des Klebstoffs}
+    \label{tab:Nutzwertanalyse}
+\end{table}
+%-------------------------------------------------
+%-------------------------------------------------
+\section{Dosierprozessablauf}
+\label{sec:Dosierprozessablauf}
+Im Dosierprozess müssen reproduzierbare Dosierpunkte an der genau definierten Position dosiert werden. Wichtige Einflussfaktoren wie Druckluft, Dosierabstand usw. werden im Kapitel~\ref{sec: Vorversuche zur Reproduzierbarkeit des Dosierpunktes} näher erläutert. Der Dosierprozessablauf ist in Abbildung~\ref{fig:Dosierprozessablauf} gezeigt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 65mm]{bilder/Dosierprozessablauf.png}
+    \caption{Dosierprozessablauf}
+    \label{fig:Dosierprozessablauf}
+\end{figure}
+
+%-------------------------------------------------
+%-------------------------------------------------
+\section{Prozessmodule}
+In der vorliegenden Arbeit besteht das Montagesystem aus 3 Prozessmodulen: Saugmodul, Dosiermodul und Inspektionsmodul (vergleiche  Abbildung~\ref{fig:prozessmodule}).
+
+Im {\bf Saugmodul} ist eine Saugnadel mit geeigneten Saugnapf ausgerüstet. Nach dem Versuch werden eine Nadel mit einem Durchmesser von 0,51mm und ein Saugnapf mit einem Durchmesser von 1 mm als Sauggreifer ausgewählt, damit das ITO-Glas sicher angesaugt werden kann.
+
+Im {\bf Dosiermodul} werden eine Dosiernadel und eine angepasste Kartusche mittels einem besonderen Adapter am MIMOSE montiert. Basierend auf praktischen Erfahrungen sollte der Durchmesser der Dosiernadel 10 bis 20-mal größer als der Durchmesser der Partikel des zu verwendeten Klebstoffs sein. Gemäß den Datenblättern ist der Durchmesser der Partikel des Klebstoffs 0,026mm. Daher steht eine Nadel mit einem Durchmesser von 0,41mm für den Dosierprozess zur Verfügung.
+
+Im {\bf Inspektionsmodul} stehen 2 Kameras zur Verfügung. Die untere Kamera dient zur präzisen Positionierung des ITO-Glases und die obere Kamera zur präzisen Positionierung der Platine.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 100mm]{bilder/Prozessmodule.jpg}
+    \caption{Prozessmodule}
+    \label{fig:prozessmodule}
+\end{figure}
+
+%-------------------------------------------------
+\subsection{Lagebeziehung der Prozessmodule}
+Es muss zuerst die Lagebeziehung zwischen den Prozessmodulen gegeben sein, damit sich die Dosiernadel an der vorgesehenen Dosierpunkt auf der Platine positionieren lässt. Und der Saugnadel bestückt das ITO-Glas an der richtigen Stelle. Die grobe Lagebeziehung ist in Abbildung~\ref{fig:Lagebeziehung} gezeigt. Im folgenden Absatz wird beschrieben, wie die Lagebeziehung berechnet wird.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 105mm]{bilder/grobLagebeziehung.png}
+    \caption{grobe Lagebeziehung der Prozessmodule \\S: Saugnadel; D: Dosiernadel; K: obere Kamera; O: Drehachse des MIMOSEs}
+    \label{fig:Lagebeziehung}
+\end{figure}
+%-------------------------------------------------
+\subsubsection{Lagebeziehung zwischen oberer Kamera und Drehachse des MIMOSEs}
+
+In der vorliegenden Arbeit wird der Passermarker auf der Platine verwendet, um die Lagebeziehung zwischen der Drehachse und der Mitte der oberen Kamera zu ermitteln. Eine schematische Darstellung zur Berechnung von $\vec{OK}$ ist in Abbildung~\ref{fig:OK} gezeigt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 70mm]{bilder/OK.png}
+    \caption{$\vec{OK}$-Schemadarstellung}
+    \label{fig:OK}
+\end{figure}
+
+Der detaillierte Berechnungsprozess sieht wie folgt aus:
+
+\begin{itemize}
+    \item MIMOSE mit Hilfe des DIPLOMs bedienen bis der Passermarker in der Mitte des Sichtfeldes der oberen Kamera erscheint (vergleiche Abbildung~\ref{fig:Passermarker0}).
+    \item Die aktuellen Koordinatenwerte $O(x_o, y_o)$ im Weltkoordinatensystem dokumentieren.
+    \item Die Drehachse um 180 Grad drehen, MIMOSE bedienen bis derselber Passermarker wieder in der Mitte des Sichtfeldes erscheint (vergleiche Abbildung~\ref{fig:passermarker180}).
+    \item Die aktuellen Koordinatenwerte $O'(x_o',  y_o')$ im Weltkoordinatensystem dokumentieren.
+    \item $\vec{OK} = \frac{\vec{OO'}}{2} = (\frac{x_o' - x_o}{2}, \frac{y_o' -  y_o}{2})$
+\end{itemize}
+
+\begin{figure}[H]
+\begin{center} 
+\subfigure[Passermarker 0 Grad]{\label{fig:Passermarker0}
+\includegraphics[width=60mm]{bilder/p0.png}}
+\subfigure[Passermarker 180 Grad]{\label{fig:passermarker180}
+\includegraphics[width=60mm]{bilder/p180.png}}
+\caption{$\vec{OK}$ Berechnungsprozess}
+\label{fig:Passermarker}
+\end{center}
+\end{figure}
+
+%-------------------------------------------------
+\subsubsection{Lagebeziehung zwischen der Saugnadel/Dosiernadel und Drehachse des MIMOSEs}
+Analog der oben verwendeten Methode können die Lagebeziehung zwischen Saugnadel/Dosiernadel und Drehachse abgeleitet werden. Die schematische Darstellung und das Vorgehen sind in Abbildung~\ref{fig:OS} und Abbildung~\ref{fig:OS0180} gezeigt. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=80mm]{bilder/OS.png}
+    \caption{$\vec{OS}$ Schemadarstellung}
+    \label{fig:OS}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+\subfigure[Schnitt 1.]{\label{fig:S0}
+\includegraphics[width=50mm]{bilder/S0.png}}
+\subfigure[Schnitt 2.]{\label{fig:S180A}
+\includegraphics[width=50mm]{bilder/S180A.png}}
+\subfigure[Schnitt 3.]{\label{fig:S180B}
+\includegraphics[width=50mm]{bilder/S180B.png}}
+\caption{$\vec{OS} $ Berechnungsprozess}
+\label{fig:OS0180}
+\end{center}
+\end{figure}
+Eine andere Möglichkeit zur Ermittlung des $\vec{OS}$ bzw. $\vec{OD}$ ist mittels Koordinatentransformation zwischen den unteren Kamerakoordinatensystem und dem Weltkoordinatensystem. Diese Methode wird im Abschnitt~\ref{sec:referenzieren} näher erläutert.
+
+%-------------------------------------------------
+\subsection{Koordinatentransformationen zwischen den Prozessmodulen} \label{sec:referenzieren}
+In der vorliegenden Arbeit müssen 4 Koordinatensysteme berücksichtigt werden, nämlich Welt-, unteres Kamera-, Platinen-, und Vakuumchuck-Koordinatensystem. Die Koordinaten des entsprechenden Koordinatensystems können abgelesen werden, wie in Tabelle~\ref{tab:Koordinatensysteme} gezeigt. Jedoch muss der Zusammenhang zwischen den Koordinatensystemen mittels Koordinatentransformationen bekannt sein.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+    \hline
+         Koordinatensystem & Ablesen der Koordinatenwert von  \\
+         \hline
+         Weltkoordinatensystem & MIMOSE \\
+         Kamerakoordinatensystem & DIPLOM \\
+         Platinen-Koordinatensystem & Messung\\
+         Vakuumchuck-Koordinatensystem & Messung\\
+    \hline
+    \end{tabular}
+    \caption{Koordinatensysteme}
+    \label{tab:Koordinatensysteme}
+\end{table}
+
+%-------------------------------------------------
+\subsubsection{Koordinatentransformation zwischen MIMOSE und der unten Kamera (acA-200uc)}
+
+Wenn sich die relative Lagebeziehung zwischen den Zweikoordinatentisch die Kamera unverändert ist, d.h. die Kamera auf dem Zweikoordinatentisch festgelegt wird, dann lässt sich die Transformationsmatrix ableiten. 
+\begin{center}
+$
+\begin{pmatrix}
+X_w \\
+Y_w \\
+1 \\
+\end{pmatrix} = 
+T
+\begin{pmatrix}
+X_k \\
+Y_k \\
+1 \\
+\end{pmatrix}
+$
+\end{center}
+Wie man aus Abbildung~\ref{fig:OS0180} entnehmen kann, ist die Saugnadelebene nicht parallel zu Bildebene, wie in Abbildung dargestellt~\ref{fig:Bildebene}. Daher wird in der vorliegenden Arbeit eine perspektivische Transfermethode verwendet, um die Transformationsmatrix $T$ zu gewinnen\cite{5}. Dazu braucht 4 Koordinatenpaaren.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 130mm ]{bilder/Bildebene.png}
+    \caption{Bildebene und Saugnadelebene}
+    \label{fig:Bildebene}
+\end{figure}
+
+Es muss berücksichtigt werden, dass die aus MIMOSE abgelesener Koordinate die Koordinate der Drehachse (O) im Weltkoordinatensystem ist. Aber die aus DIPLOM abgelesener Koordinate ist die Koordinate des Saugnadel- bzw. Dosiernadelmittels (S bzw. D) im unteren Kamerakoordinatensystem. Daher muss man vor der Koordinatentransformation die Koordinate der Drehachse(O) im unteren Kamerakoordinatensystem berechnen. Eine Lösungsmöglichkeit zu diesem Problem ist analog der im Abschnitt verwendeten Methode, dann lassen sich 4 Koordinaten der Drehachse im unteren Kamerakoordinatensystem herleiten. Tabelle~\ref{tab:O} zeigt ein Beispiel dafür.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|l|l|l}
+    \hline
+         Koordinatensystem & $S^0$ & $S^{180}$ & O\\
+         \hline
+         Kamerakoordinatensystem & $(667, 579)$ & $(848, 426)$ & $(\frac{667+848}{2}, \frac{579+426}{2})$\\
+         \hline
+         Weltkoordinatensystem & - & - & $(15680, 5508)$\\
+    \hline
+    \end{tabular}
+    \caption{Koordinate der Drehachse im unteren Kamerakoordinatensystem}
+    \label{tab:O}
+\end{table}
+\clearpage
+
+\lstset
+{
+    language = C++,
+    frame=leftline, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{gray}, % comment color
+    keywordstyle=\color{red}, % keyword color
+    stringstyle=\color{blue}, % string color
+    breaklines=true,
+    extendedchars=true
+}
+\begin{lstlisting}
+//*******************************************************
+//            NadelnKalibrieren C++ Code
+//*******************************************************
+vector<Point3f> NadelnKalibrieren(Point3f P_S, Point3f S_M, Point3f D_M)
+{
+    Point2f KameraK[4], MaschineK[4], S_0[4], S_180[4];
+    S_0[0] = Point2f(667, 579);
+    S_0[1] = Point2f(232, 582);
+    S_0[2] = Point2f(231, 394);
+    S_0[3] = Point2f(663, 390);
+
+    S_180[0] = Point2f(848, 426);
+    S_180[1] = Point2f(414, 431);
+    S_180[2] = Point2f(411, 242);
+    S_180[3] = Point2f(845, 237);
+
+    MaschineK[0] = Point2f(15608, 5508);
+    MaschineK[1] = Point2f(15608, 6785);
+    MaschineK[2] = Point2f(16162, 6785);
+    MaschineK[3] = Point2f(16162, 5508);
+
+    Point3f K_0 = Point3f(25560, 66535, 16896);
+    Point3f K_180 = Point3f(120594, 11628, 16896);
+
+    Point3f OK = (K_180-K_0)/2;
+
+    KameraK[0] = Point2f((S_0[0].x+S_180[0].x)/2, (S_0[0].y+S_180[0].y)/2);
+    KameraK[1] = Point2f((S_0[1].x+S_180[1].x)/2, (S_0[1].y+S_180[1].y)/2);
+    KameraK[2] = Point2f((S_0[2].x+S_180[2].x)/2, (S_0[2].y+S_180[2].y)/2);
+    KameraK[3] = Point2f((S_0[3].x+S_180[3].x)/2, (S_0[3].y+S_180[3].y)/2);
+
+    Mat T_cv = getPerspectiveTransform(KameraK, MaschineK);
+
+    vector<Point3f> O_k, O_absolut;
+    O_k.push_back(Point3f(640, 512, 1));
+
+    transform(O_k, O_absolut, T_cv);
+
+    const Point3f Passermarker_Pad = Point3f(19000, 1000, 1);
+    const Point3f erst_Pad = Point3f(3000, 1000, 1);
+
+    Point3f O_abs = O_absolut[0];
+    Point3f OS = O_abs - S_M;
+    Point3f OD = O_abs - D_M;
+    Point3f SK = OK - OS;
+    Point3f DK = OK - OD;
+    Point3f erst_Pad_M = erst_Pad + P_S + DK;
+    Point3f Passermarker_Pad_M = Passermarker_Pad + P_S + SK;
+
+    vector<Point3f> Rueckwerte(2);
+    Rueckwerte[0] = erst_Pad_M;
+    Rueckwerte[1] = Passermarker_Pad_M;
+    return Rueckwerte;
+}
+\end{lstlisting}
+\clearpage
+
+%-------------------------------------------------
+\subsubsection{Koordinatentransformation zwischen MIMOSE und der Platine bzw. dem Vakuumchuck}
+
+Jeder Punkt im Vakuumchuck sowie auf der Platine kann die entsprechende einzige Koordinate im Weltkoordinatensystem gefunden werden, daher lassen sich die Richtung der Vakuumchuck- und Platinen-Koordinatensystem definieren, wie in Abbildung~\ref{fig:Koordinatensystem} gezeigt.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=80mm]{bilder/Koordinatensystem.png}
+    \caption{Welt-, Vakuumchuck- und Platine-Koordinatensystem}
+    \label{fig:Koordinatensystem}
+\end{figure}
+Die Beziehung zwischen dem Welt- und Vakuum-Koordinatensystem. Wie man aus Abbildung~\ref{fig:Koordinatensystem} entnehmen kann, ist $\alpha = 180^\circ$.
+
+\begin{center}
+$
+\begin{pmatrix}
+X_w^v \\
+Y_w^v \\
+1 \\
+\end{pmatrix} = 
+\begin{pmatrix}
+\cos\alpha & -\sin\alpha & T_x^v \\
+\sin\alpha & \cos\alpha & T_y^v \\
+0 & 0 & 1 \\
+\end{pmatrix}
+\begin{pmatrix}
+X_v \\
+Y_v \\
+1 \\
+\end{pmatrix}
+$
+\end{center}
+
+
+Die Beziehung zwischen dem Welt- und Platinen-Koordinatensystem. Wie man aus Abbildung~\ref{fig:Koordinatensystem} entnehmen kann, ist $\beta = 0^\circ$.
+\begin{center}
+$
+\begin{pmatrix}
+X_w^p \\
+Y_w^p \\
+1 \\
+\end{pmatrix} = 
+\begin{pmatrix}
+\cos\beta & -\sin\beta & T_x^p \\
+\sin\beta & \cos\beta & T_y^p \\
+0 & 0 & 1 \\
+\end{pmatrix}
+\begin{pmatrix}
+X_p \\
+Y_p \\
+1 \\
+\end{pmatrix}
+$ 
+\end{center}
+%-------------------------------------------------
+%-------------------------------------------------
+
+
+

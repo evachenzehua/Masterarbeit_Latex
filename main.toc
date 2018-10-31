@@ -1,0 +1,79 @@
+\babel@toc {ngerman}{}
+\contentsline {chapter}{Abbildungsverzeichnis}{x}{section*.3}
+\contentsline {chapter}{Tabellenverzeichnis}{xii}{section*.5}
+\contentsline {chapter}{\numberline {1}Einf\IeC {\"u}hrung}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Gedruckte Elektronik}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Zielsetzung}{3}{section.1.2}
+\contentsline {section}{\numberline {1.3}Aufbau der Arbeit}{4}{section.1.3}
+\contentsline {chapter}{\numberline {2}Grundlagen und Stand der Technik}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Wichtige Begriffe zur Klebtechnik}{5}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Adh\IeC {\"a}sion und Koh\IeC {\"a}sion}{5}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Viskosit\IeC {\"a}t}{6}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Topfzeit}{7}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Abbindezeit}{8}{subsection.2.1.4}
+\contentsline {section}{\numberline {2.2}Vor- und Nachteile der Klebtechnik}{8}{section.2.2}
+\contentsline {section}{\numberline {2.3}Elektrisch leitende Klebstoffe}{9}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Isotrop und anisotrop leitender Klebstoff}{10}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Zweikomponenten-Klebstoff}{11}{subsection.2.3.2}
+\contentsline {section}{\numberline {2.4}Auftragsverfahren}{12}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Auftragverhalten}{12}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Klebstoffauftragskontrolle}{13}{subsection.2.4.2}
+\contentsline {section}{\numberline {2.5}FlipChip-Kontaktierung}{13}{section.2.5}
+\contentsline {chapter}{\numberline {3}Materialien und Methoden}{14}{chapter.3}
+\contentsline {section}{\numberline {3.1}Materialien}{14}{section.3.1}
+\contentsline {section}{\numberline {3.2}Systeme}{16}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Mikromontagesystem MIMOSE}{16}{subsection.3.2.1}
+\contentsline {subsubsection}{Zweikoordinatentisch}{17}{section*.20}
+\contentsline {subsubsection}{Vakuumchuck}{17}{section*.21}
+\contentsline {subsubsection}{Hubdrehachse}{18}{section*.23}
+\contentsline {subsection}{\numberline {3.2.2}Dosier- und Greifsystem}{18}{subsection.3.2.2}
+\contentsline {subsubsection}{Dosierventil}{18}{section*.24}
+\contentsline {subsubsection}{Nadeln}{19}{section*.26}
+\contentsline {subsection}{\numberline {3.2.3}Inspektionssystem}{19}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Software}{20}{section.3.3}
+\contentsline {subsubsection}{OpenCV}{20}{section*.28}
+\contentsline {subsubsection}{Pylon}{20}{section*.29}
+\contentsline {subsubsection}{DIPLOM}{20}{section*.30}
+\contentsline {chapter}{\numberline {4}Entwicklung des automatisierten Montageprozesses}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}Anforderungen und Randbedingungen}{21}{section.4.1}
+\contentsline {section}{\numberline {4.2}Konzeption des Montageprozesses}{23}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Glastr\IeC {\"a}ger}{24}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Klebstoffauswahl}{26}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}Dosierprozessablauf}{27}{section.4.3}
+\contentsline {section}{\numberline {4.4}Prozessmodule}{28}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Lagebeziehung der Prozessmodule}{29}{subsection.4.4.1}
+\contentsline {subsubsection}{Lagebeziehung zwischen oberer Kamera und Drehachse des MIMOSEs}{30}{section*.40}
+\contentsline {subsubsection}{Lagebeziehung zwischen der Saugnadel/Dosiernadel und Drehachse des MIMOSEs}{31}{section*.43}
+\contentsline {subsection}{\numberline {4.4.2}Koordinatentransformationen zwischen den Prozessmodulen}{32}{subsection.4.4.2}
+\contentsline {subsubsection}{Koordinatentransformation zwischen MIMOSE und der unten Kamera (acA-200uc)}{32}{section*.47}
+\contentsline {subsubsection}{Koordinatentransformation zwischen MIMOSE und der Platine bzw. dem Vakuumchuck}{36}{section*.50}
+\contentsline {chapter}{\numberline {5}Bildverarbeitung}{37}{chapter.5}
+\contentsline {section}{\numberline {5.1}Bildverbesserung}{37}{section.5.1}
+\contentsline {section}{\numberline {5.2}Bereich von Interesse}{37}{section.5.2}
+\contentsline {section}{\numberline {5.3}Segmentierung und Merkmalextraktion}{37}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Morphologische Transformation}{38}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Schwellwertbildung}{38}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Kantendetektoren}{38}{subsection.5.3.3}
+\contentsline {chapter}{\numberline {6}Durchf\IeC {\"u}hrung und Evaluierung der Versuche}{39}{chapter.6}
+\contentsline {section}{\numberline {6.1}Versuche zum Dosieren}{39}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Vorversuche zur Reproduzierbarkeit des Dosierpunktes}{39}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Ergebnisse}{39}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}Versuche zum Montageprozess}{39}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Manueller Montageprozess}{40}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Automatisierter Montageprozess}{40}{subsection.6.2.2}
+\contentsline {section}{\numberline {6.3}Evaluierung der Klebverbindungen}{40}{section.6.3}
+\contentsline {chapter}{\numberline {7}Zusammenfassung und Ausblick}{41}{chapter.7}
+\contentsline {section}{\numberline {7.1}Zusammenfassung}{41}{section.7.1}
+\contentsline {section}{\numberline {7.2}Ausblick}{41}{section.7.2}
+\contentsline {chapter}{\numberline {A}Anhang}{42}{appendix.A}
+\contentsline {section}{\numberline {A.1}Datenbl\IeC {\"a}tter}{42}{section.A.1}
+\contentsline {section}{\numberline {A.2}Vermessung der verwendeten ITO-Glas und Platine}{48}{section.A.2}
+\contentsline {section}{\numberline {A.3}2D-Zeichnung des Glastr\IeC {\"a}gers}{49}{section.A.3}
+\contentsline {section}{\numberline {A.4}Quellcode}{50}{section.A.4}
+\contentsline {section}{\numberline {A.5}Daten der Dosierversuche}{51}{section.A.5}
+\contentsline {section}{\numberline {A.6}Anleitungen}{52}{section.A.6}
+\contentsline {subsection}{\numberline {A.6.1}Verarbeitung Panacol 325}{52}{subsection.A.6.1}
+\contentsline {subsection}{\numberline {A.6.2}LPKF MotionTools}{53}{subsection.A.6.2}
+\contentsline {subsection}{\numberline {A.6.3}Pylon Viewer}{54}{subsection.A.6.3}
+\contentsline {subsection}{\numberline {A.6.4}DIPLOM}{55}{subsection.A.6.4}
+\contentsline {chapter}{Literaturverzeichnis}{55}{subsection.A.6.4}

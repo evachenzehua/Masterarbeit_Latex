@@ -1,0 +1,97 @@
+\chapter{Anhang}
+%\label{sec:Anhang}
+
+\section{Datenblätter}
+\label{an:Daten}
+{\bf Vakuumchuck}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=160 mm]{bilder/Zeichnung_Vakuumchuck.pdf}
+    \label{an:Vakuumchuck}
+\end{figure}
+\clearpage
+
+{\bf Kamera}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=160 mm]{bilder/AnhangKamera.png}
+    \label{an:AnhangKamera}
+\end{figure}
+\clearpage
+
+\includepdf[pages = {1,2}]{KIT-EL325_DE.pdf}\label{pdf:325}
+
+\includepdf[pages = {1,2}]{KIT-EL336_DE.pdf}\label{pdf:336}
+
+\section{Vermessung der verwendeten ITO-Glas und Platine}\label{sec:vermessung}
+\clearpage
+
+\section{2D-Zeichnung des Glasträgers}\label{sec:2D}
+\clearpage
+
+\section{Quellcode}\label{sec:Quellcode}
+
+\lstset
+{
+    language = C++,
+    frame=leftline, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{gray}, % comment color
+    keywordstyle=\color{red}, % keyword color
+    stringstyle=\color{blue}, % string color
+    breaklines=true,
+    extendedchars=true
+}
+\begin{lstlisting}
+#include<opencv2/opencv.hpp>
+#include<opencv2/imgproc.hpp>
+#include<opencv2/core.hpp>
+#include<opencv2/imgcodecs.hpp>
+#include"highgui.h"
+#include<iostream>
+#include<string>
+#include"cv.h"
+#include<math.h>
+#include<time.h>
+
+#define saveImages 1
+
+//------include files to use the PYLON API-------
+#include<pylon\PylonIncludes.h>
+#include<pylon\PylonGUI.h>
+#include<C:\\Program Files\Basler\pylon 5\Development\Samples\C++\include\ConfigurationEventPrinter.h>
+
+//------include files to use MIMOSE--------------
+#include"C:\\Program Files (x86)\VC_API\vcs.h"
+#pragma comment (lib, "C:\\Program Files (x86)\\VC_API\\vc_api.lib")
+
+//------Variablen fuer MIMOSE---------------------
+short sHandle;
+short channel;
+
+using namespace cv;
+using namespace std;
+using namespace Pylon;
+\end{lstlisting}
+\clearpage
+
+\section{Daten der Dosierversuche}\label{sec:Dosierversuch}
+\clearpage
+
+\section{Anleitungen}\label{sec:anleitungen}
+\subsection{Verarbeitung Panacol 325}\label{sec:325}
+\clearpage
+\subsection{LPKF MotionTools}\label{sec:LPKF}
+\clearpage
+\subsection{Pylon Viewer}\label{sec:pylon}
+\clearpage
+\subsection{DIPLOM}\label{sec:diplom}
+
+
+
+
+
+
+

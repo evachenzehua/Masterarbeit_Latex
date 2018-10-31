@@ -1,0 +1,174 @@
+\chapter{Materialien und Methoden}
+\label{sec:Materialien}
+%-------------------------------------------------
+In diesem Kapitel werden die verwendeten Materialien, Systeme sowie die Software vorgestellt.
+%-------------------------------------------------
+%-------------------------------------------------
+\section{Materialien}
+\large{\bf ITO-Glas und Platine}\normalsize
+
+Die verwendeten ITO-Gläser sind am Institut für Nanotechnik hergestellt, darauf werden 8 Transistoren gedruckt. Ein ITO-Glas hat insgesamt 36 Kontaktpads. 28 KontaktPads davon werden als Kontaktpads mit Hilfe der elektrisch leitenden Klebstoff mit der Platine angeschlossen. Die ITO-Struktur und die zu verwendende Platine ist in Abbildung~\ref{fig:ITO-Glas und Platine}  dargestellt.
+\begin{figure}[H]
+\begin{center}
+\subfigure[ITO-Struktur]{\label{fig:ITO-Struktur}
+\includegraphics[width=50mm]{bilder/Core_Beschr_keine_Nummerierung.png}}
+\subfigure[Platine]{\label{fig:PCB-Struktur}
+\includegraphics[width=80mm]{bilder/diffc_puf_core_adapter_rev_1_flip_chip_2.png}}
+\caption{ITO-Glas und Platine}
+\label{fig:ITO-Glas und Platine}
+\end{center}
+\end{figure}
+%----------------------------------------------------------
+
+\large{\bf Elektrisch leitender Klebstoff}\normalsize
+
+Für elektrisch leitenden Klebestoff stehen metallische Füllstoffe wie Silber und Graphit zur Verfügung. Je höher der Füllstoffgehalt, desto besser die Leitfähigkeit. Für den Montageprozess werden in der vorliegenden Arbeit zwei elektrisch leitende Klebstoffe evaluiert und beide sind Zweikomponenten-Klebstoff, die bei Raumtemperatur aushärten und eine lange Lagerzeit haben. Bei den Klebstoffen handelt es sich um Panacol Elecolit 325 und Panacol Elecolit 336.
+
+{\bf Panacol Elecolit 325} ist ein silbergefüllter, lösungsmittelfreier 2-K Epoxidharzklebstoff. Panacol Elecolit 325 kann mit Dispenser oder Stempel verarbeitet werden. Die Aushärtung erfolgt bereits bei Raumtemperatur. Bei erhöhten Temperaturen sind sehr kurze Härtezeiten möglich. Panacol Elecolit 325 zeichnet sich durch gute Leitwerte bei „Kalthärtung“ und gutes Spaltfüllvermögen aus. 
+
+{\bf Panacol Elecolit 336} ist ein silbergefüllter, lösungsmittelfreier 2-K Epoxidharzklebstoff. Panacol Elecolit 336 kann mit Dispenser, im Stempel oder Siebdruck verarbeitet werden. Die Aushärtung erfolgt bereits bei Raumtemperatur. Bei erhöhten Temperaturen sind sehr kurze Härtezeiten möglich. Panacol Elecolit 336 besitzt wie Elecolit 325 auch gute Leitwerte bei „Kalthärtung“ und gutes Spaltfüllvermögen aus.
+
+Tabelle~\ref{tab:klebereigenschaften} zeigt übersichtlich die wichtigsten Eigenschaften von beiden Klebstoffen auf.
+
+\begin{table}[H]
+\begin{center}
+    \begin{tabular}{p{4cm}|p{5cm}|p{5cm} l|l|l}
+    \hline
+      &               325                    & 336 \\
+    \hline
+        Viskosität  & pastös    & pastös \\
+        &\\
+        Aushärtung                   &  16h / 25°C                           &16h / 25°C \\
+        &\\
+        Temp.Best (°C)               & -40 bis +150                           &  -40 bis +150 \\
+        &\\
+        Volumenwiderstand (ohm x cm) & 0,0005                                 & 0,001 \\
+        &\\
+        Besondere Eingeschaften      & kurze Zeiten bei hohen Temperaturen, Dispenser, Sieb- und Stempeldruck, sehr gute Leitfähigkeit   &  härtet bei RT und niedrigen Temperaturen, Dispenser, Sieb- und Stempeldruck möglich \\
+        \hline
+    \end{tabular}
+    \caption{Eigenschaften der verwendeten Klebstoffe}
+    \label{tab:klebereigenschaften}
+\end{center}
+\end{table}
+
+Ausführliche Informationen können aus Anhang \ref{an:Daten} aufgeführten Datenblättern entnommen werden.
+
+%-------------------------------------------------
+%-------------------------------------------------
+\section{Systeme}
+
+%-------------------------------------------------
+\subsection{Mikromontagesystem MIMOSE}
+
+Mikromontagesystem, kurz MIMOSE, ist vom IAI entwickelt und umfasst insgesamt vier Freiheitsgrad, wie in Abbildung~\ref{fig:MIMOSE} dargestellt. Die Einrichtung zur Positionierung von MIMOSE besteht aus einem Zweikoordinatentisch, auf dem das zu behandelnde Objekt transportiert und hochpräzise in den Richtungen X und Y positioniert werden kann. Zentrisch über diesem Zweikoordinatentisch befindet sich eine Hubdrehachse, mit der ein anzubringendes Werkzeug sowohl in Z-Richtung bewegt, als auch um die eigene Achse gedreht werden kann. Die Daten der Arbeitsbreite und die von Achsen können aus Tabelle~\ref{tab:Arbeitsbreite} entnommen werden. Das gesamte System wird durch ein von der Firma LPKF entwickeltes digitales Achssteuergerät SMCU II geführt. Um externe Geräte ansteuern zu können, stehen noch weitere digitale I/O-Kanäle zur Verfügung.
+
+\begin{figure}[H]
+\begin{minipage}[b]{0.6\linewidth}
+    \centering
+    \includegraphics[width = 80mm]{bilder/mimose.png}
+    \caption{Mikromontagesystem MIMOSE}
+    \label{fig:MIMOSE}
+\end{minipage}
+\begin{minipage}[b]{0.4\linewidth}
+    \centering
+    \begin{tabular}{l|l|l}
+        \hline
+        \normalsize
+        Achse & Arbeitsbreite & Auflösung   \\
+        \hline
+        X & 0-205mm & 1µm \\
+        Y & 0-174mm & 1µm \\
+        Z & 0-70mm & 1µm \\
+        C & - & 1µrot\\
+        \hline
+    \end{tabular}
+    \captionof{table}{Arbeitsbreite und Auflösung der Achsen}
+    \label{tab:Arbeitsbreite}
+\end{minipage}
+\end{figure}
+
+\subsubsection{Zweikoordinatentisch}
+
+Als Zweikoordinatentisch wird ein dynamischer und präziser Koordinatentisch auf der Basis eines Zweikoordinaten-Gleichstromdirektantriebes in Verbindung mit einer hochauflösenden Zweikoordinaten-Messeinrichtung verwendet. Der Tisch wird parallel zur Führungsebene über vier luftgelagerte Füße geführt. Der Bewegungsbereich beträgt 205mm x 174mm. Die Genauigkeit der Bewegung liegt im Bereich einstelliger Mikrometer.
+
+\subsubsection{Vakuumchuck}
+
+Der in Abbildung~\ref{fig:Vakuumchuck} dargestellte Vakuumchuck hat die Größe 208 mm x 208 mm und wird auf dem Zweikoordinatentisch ausgerichtet. Durch Einschaltung einer mit der Vakuumchuck verbundene Vakuumpumpe können entsprechend positionierte Folien, Platinen und Glasträger angesaugt werden. Vor dem Ansaugen müssen Folien, Platine und Glasträger möglichst präzise positioniert werden, dazu werden Stifte als Anschlag benutzt. Ausführliche Informationen können aus Anhang~\ref{an:Daten} entnommen werden.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=150mm]{bilder/chuck_ohne_bemassung.pdf}
+    \caption{Vakuumchuck}
+    \label{fig:Vakuumchuck}
+\end{figure}
+
+\subsubsection{Hubdrehachse}
+
+Die am Querportal angebrachte Z-Achse besteht aus einem kompakten Lineartisch mit Präzisionsführungen. Der maximale Fahrweg der Z-Achse beträgt 70mm. Als Antrieb findet ein rotatorischer Servomotor Verwendung, dessen Drehbewegung durch eine Präzisionskugelspindel gewandelt und in den Lineartisch eingeleitet wird. Zur Gewährleistung der Positioniergenauigkeit ist der Lineartisch mit einem inkrementellen Längenmesssystem gekoppelt.
+
+Auf dem Schlitten des Lineartisches befindet sich eine präzise gelagerte Welle, die als Aufnahme für das Werkzeug dient. Die Bewegung und Positionierung dieser Welle wird durch die Kombination eines Gleichstromservomotors mit einem inkrementellen rotatorischen Signalgeber realisiert.
+
+%-------------------------------------------------
+\subsection{Dosier- und Greifsystem}
+
+\subsubsection{Dosierventil}
+
+In der vorliegenden Arbeit wird das Zeit-Druck-Dosierventil {\bf EFD 2000XL} (vergleiche Abbildung~\ref{fig:EFD2000XL}) eingesetzt. EFD 2000XL ist auf der Ausgangsseite mit einem Druck von 0 bis 7 bar einstellbar. Die Zeitintervalle der Druckbeaufschlagung am Ausgang können Mikrosekunden genau eingestellt werden. In der vorliegenden Arbeit werden sowohl die Dispenser als auch die Dosierzeit über die Steuerung des MIMOSE angesteuert. Der Druck muss manuell vor dem Dosierprozess eingestellt werden.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 100mm]{bilder/EFD2000.jpg}
+    \caption{EFD 2000XL}
+    \label{fig:EFD2000XL}
+\end{figure}
+
+\subsubsection{Nadeln}
+
+Zum Dosieren des Klebstoffs und Ansaugen von ITO-Glas werden Nadeln verwendet. Im Markt werden Standarddosiernadeln mit unterschiedlichen Durchmessern angeboten. Die Durchmesser sind durch die Farben der Nadelkörper kodiert.  
+
+In der vorliegenden Arbeit werden 2 Nadeln mit unterschiedlichen Durchmessern verwendet. Einer kommt für das Ansaugen von ITO-Glas {\bf(Saugnadel)} und ein anderer für das Dosieren {\bf(Dosiernadel)} zum Einsatz. Der Innendurchmesser der Dosiernadel ist vom Durchmesser des Klebstoffpartikels abhängig. Bei gefüllten Klebstoffen besteht darüber hinaus die Gefahr, dass die Partikel die Dosiernadel verstopfen. Basierend auf praktischen Erfahrungen sollten der Innendurchmesser von Dosiernadel 10 bis 20-mal größer als der Durchmesser des Klebstoffpartikels sein.
+
+Eine Übersicht der zu verwendeten Nadeln ist in Tabelle~\ref{tab:Nadeln}.
+\begin{table}[H]
+\begin{center}
+    \begin{tabular}{l l l l l l}
+    \hline
+         Anwendung & Farbe & Innendurchmesser & Ausßendurchmesser & Länge & Bestellnr. \\
+         \hline
+         Saugnadel & Lila & 0,51mm & 0,82mm & 12,7mm & F560089\\
+         Dosiernadel & Orange & 0,33mm & 0,65mm & 6,35mm & F560090-1/4\\
+    \hline
+    \end{tabular}
+    \caption{Übersicht der zu verwendeten Nadeln}
+    \label{tab:Nadeln}
+\end{center}
+\end{table}
+
+%-------------------------------------------------
+\subsection{Inspektionssystem}
+Um die Dosierposition und Absetzposition vom ITO-Glas genauer zu erkennen wird ein Inspektionssystem aufgebaut. Dazu werden 2 Digitalkamera mit unterschiedlicher Resolution eingesetzt. 
+
+Die Digitalkamera acA1300-200uc wird unter einem Eck des Vakuumchucks befestigt, wie in Abbildung~\ref{fig:MIMOSE} dargestellt. Diese Digitalkamera bedient für den Nadelnkalibrier- und Ausrichtprozess. Das ITO-Glas wird aus dem Werkstückträger angesaugt und zu der Digitalkamera zugeführt. Die Position vom ITO-Glas wird mit Hilfe der Bildverarbeitung ermittelt.
+
+Die Digitalkamera acA1920-25uc wird über den Vakuumchuck ausgerüstet, wie in Abbildung 3.2b dargestellt.  Diese Digitalkamera wird für die Erkennung des Passermarkers der Platine und die Ermittlung der Position des ersten Dosierpunktes verwendet.
+
+Ausführliche Informationen können den im Anhang~\ref{an:Daten} aufgeführten Datenblättern entnommen werden.
+
+%\section{Microskop zur Dosierpunktvermessung}
+%\label{sec:Microskop}
+
+%-------------------------------------------------
+%-------------------------------------------------
+\section{Software}
+\label{sec:Software}
+
+\subsubsection{OpenCV}
+
+In der vorliegenden Arbeit kommt OpenCV für den Bildverarbeitungsprozess, das im Kapitel näher erläutert wird, zum Einsatz. OpenCV ist eine freie Programmbibliothek mit Algorithmen für die Bildverarbeitung und maschinelles Sehen. Sie ist für die Programmiersprachen C, C++, Python und Java geschrieben und steht als freie Software unter den Bedingungen der BSD-Lizenz. Das „CV“ im Namen ist Englisch für „Computer Vision“.  
+
+\subsubsection{Pylon}
+
+Um die Kameraparameter zu konfigurieren und um Bilder von der ausgewählten Digitalkamera einzuziehen, werden der PylonViewer und das Basler Pylon API benutzt. Mit Hilfe vom Pylon API werden die Bilder vom Passmarker des zu bestückenden Glases zuerst aufgenommen und dann mit Hilfe der Algorithmen von OpenCV verarbeitet, um den Ausrichtprozess durchzuführen.
+
+\subsubsection{DIPLOM}
+
+DIPLOM ist eine am IAI entwickelt Bilderfassung- und Bildverarbeitungssoftware. In d{}er vorliegenden Arbeit wird DIPLOM für die Initialisierung des Montageprozesses als auch im Notfall dafür nötiges manuelles Ausrichtprozess bedient. Dies wird im Kapitel~\ref{sec: ManuellerMontageprozess} näher erläutert.
